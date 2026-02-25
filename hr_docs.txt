@@ -1,0 +1,51 @@
+HR POLICY: LEAVE MANAGEMENT
+Employees can apply for casual leave (CL), sick leave (SL), and earned leave (EL).
+Casual Leave: Maximum 12 days per year. Requires at least 1 day prior notice.
+Sick Leave: Maximum 15 days per year. Medical certificate required for absences exceeding 3 days.
+Earned Leave: Accrues at 1.5 days per month of service. Can be carried forward up to 30 days.
+Leave application must include: employee ID, employee name, start date, end date, reason.
+Maternity Leave: 26 weeks paid maternity leave as per statutory requirement.
+Paternity Leave: 5 days paid paternity leave.
+Leave Without Pay (LWP): Granted when leave balance is exhausted. Requires HOD approval.
+Priority escalation: Urgent medical situations are treated as HIGH priority tickets.
+
+HR POLICY: PAYROLL AND SALARY
+Salary is processed on the last working day of each month.
+Salary slip queries should include: employee ID, month, and year of concern.
+Deductions include: PF (12% of basic), ESI (if applicable), TDS (as per tax slab).
+Advance salary: Up to 2 months salary can be drawn as advance with HOD approval.
+Reimbursements: Travel, medical, and meal reimbursements require receipts and manager approval.
+Incorrect salary: Must be reported within 7 days of credit. Priority: HIGH.
+Arrears: Calculated and processed within 30 days of promotion or pay revision.
+Pay revision disputes are URGENT priority if employee has filed formal complaint.
+
+HR POLICY: GRIEVANCE HANDLING
+Grievances should be filed within 30 days of the incident.
+Types of grievances: Workplace harassment, discrimination, unfair treatment, policy violations.
+Grievance ticket priority: HIGH by default, URGENT if safety is at risk.
+Resolution timeline: Acknowledgement within 2 working days, resolution within 15 working days.
+Anonymous grievances are accepted through the HR portal.
+Escalation: If not resolved in 15 days, automatically escalates to HR Head.
+
+HR POLICY: IT SUPPORT
+IT support tickets cover: hardware issues, software access, VPN problems, email issues.
+Priority levels:
+  - URGENT: System down, cannot work at all
+  - HIGH: Major functionality broken, workaround exists
+  - MEDIUM: Minor issue, work continues with inconvenience
+  - LOW: Enhancement request, cosmetic issues
+SLA response times: URGENT=2hrs, HIGH=4hrs, MEDIUM=8hrs, LOW=24hrs.
+Software access requests require manager approval before provisioning.
+Password resets are handled by IT helpdesk within 1 hour.
+
+HR POLICY: TICKET CLASSIFICATION
+Leave-related keywords: leave, vacation, sick, medical, absence, off, holiday, fever, emergency
+Payroll-related keywords: salary, pay, payslip, reimbursement, advance, deduction, tax, PF
+Grievance-related keywords: complaint, harassment, discrimination, unfair, issue with manager
+IT Support keywords: laptop, system, software, VPN, email, access, password, network, printer
+Priority rules:
+  - Medical emergencies: HIGH
+  - Safety concerns: URGENT
+  - Routine leave: LOW to MEDIUM depending on duration
+  - Payroll discrepancies: HIGH
+  - IT system down: URGENT
