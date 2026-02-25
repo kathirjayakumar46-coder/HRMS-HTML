@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Adamsbridge HRMS</title>
+
+<style>
+
+/* GLOBAL */
+body{
+    margin:0;
+    font-family:Segoe UI;
+    background:#f3f6f9;
+    color:#1f2937;
+}
+
+/* HEADER */
+.header{
+    height:60px;
+    background:#0f3d2e;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    font-size:18px;
+    font-weight:600;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:250px;
+    background:white;
+    border-right:1px solid #e5e7eb;
+    height:calc(100vh - 60px);
+    padding:20px;
+}
+
+.sidebar h3{
+    margin-top:0;
+    color:#0f3d2e;
+}
+
+.menu{
+    margin-top:15px;
+}
+
+.menu div{
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:8px;
+    cursor:pointer;
+}
+
+.menu div:hover{
+    background:#e6f4ef;
+}
+
+/* MAIN CONTENT */
+.main{
+    flex:1;
+    padding:25px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.card-title{
+    font-weight:600;
+    margin-bottom:15px;
+    color:#0f3d2e;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.field{
+    font-size:14px;
+}
+
+.label{
+    color:#6b7280;
+}
+
+.value{
+    font-weight:600;
+    margin-top:3px;
+}
+
+/* CHAT PANEL */
+.chat{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.chatbox{
+    height:250px;
+    overflow:auto;
+    border:1px solid #e5e7eb;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:15px;
+    background:#f9fafb;
+}
+
+.msg{
+    margin:10px 0;
+}
+
+.user{color:#0f3d2e;font-weight:600}
+.bot{color:#111827}
+
+input,textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    margin-bottom:10px;
+}
+
+button{
+    background:#0f3d2e;
+    color:white;
+    border:none;
+    padding:12px;
+    width:100%;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#145c44;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div>Adamsbridge HRMS — Coimbatore</div>
+    <div>Employee Portal</div>
+</div>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<h3>Quick Links</h3>
+<div class="menu">
+<div>Time Tracking</div>
+<div>Leave Application</div>
+<div>Payslip</div>
+<div>Training</div>
+<div>Policies</div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- PROFILE CARD -->
+<div class="card">
+<div class="card-title">Employee Profile</div>
+
+<div class="grid">
+<div class="field">
+<div class="label">Name</div>
+<div class="value">Kathir Karthikeyan J</div>
+</div>
+
+<div class="field">
+<div class="label">Department</div>
+<div class="value">Software Development</div>
+</div>
+
+<div class="field">
+<div class="label">Designation</div>
+<div class="value">Intern Associate</div>
+</div>
+
+<div class="field">
+<div class="label">Manager</div>
+<div class="value">Dhana Sekar D</div>
+</div>
+
+<div class="field">
+<div class="label">Employee ID</div>
+<div class="value">11187</div>
+</div>
+
+<div class="field">
+<div class="label">Location</div>
+<div class="value">Coimbatore</div>
+</div>
+</div>
+</div>
+
+<!-- CHAT AI PANEL -->
+<div class="chat">
+<div class="card-title">HR Assistant</div>
+
+<div id="chatbox" class="chatbox"></div>
+
+<input id="query" placeholder="Ask HR question...">
+
+<textarea id="json" rows="4" placeholder="Optional JSON input"></textarea>
+
+<button onclick="send()">Ask AI</button>
+</div>
+
+</div>
+</div>
+
+<script>
+async function send(){
+
+const q=document.getElementById("query").value.trim();
+if(!q) return alert("Enter query");
+
+let jsonInput={};
+const j=document.getElementById("json").value.trim();
+
+if(j){
+try{jsonInput=JSON.parse(j)}
+catch{return alert("Invalid JSON")}
+}
+
+const box=document.getElementById("chatbox");
+box.innerHTML+=`<div class="msg user">You: ${q}</div>`;
+
+const res=await fetch("/process",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({query:q,json_data:jsonInput})
+});
+
+const reader=res.body.getReader();
+const decoder=new TextDecoder();
+
+let botMsg=document.createElement("div");
+botMsg.className="msg bot";
+botMsg.textContent="AI: ";
+box.appendChild(botMsg);
+
+while(true){
+const {done,value}=await reader.read();
+if(done) break;
+
+const chunk=decoder.decode(value);
+const lines=chunk.split("\n\n");
+
+for(const line of lines){
+if(!line.startsWith("data:")) continue;
+const data=JSON.parse(line.replace("data:",""));
+
+if(data.token) botMsg.textContent+=data.token;
+if(data.done) botMsg.textContent="AI: "+JSON.stringify(data.result,null,2);
+}
+
+box.scrollTop=box.scrollHeight;
+}
+}
+</script>
+
+</body>
+</html>
